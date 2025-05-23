@@ -33,7 +33,10 @@ export const IndexWidget: FC = () => {
       <h2 className="mt-14">Возможности</h2>
       <h3>Статьи</h3>
       <div className="mt-6 gap-12 flex items-center">
-        <img className="max-w-[300px] object-contain rounded-2xl" src={Aboba} />
+        <img
+          className="max-w-[300px] object-contain rounded-2xl"
+          src={MainPageFirst}
+        />
         <div className="flex-grow">
           <p>
             Тесты помогают обновить знания и подходят как для людей без

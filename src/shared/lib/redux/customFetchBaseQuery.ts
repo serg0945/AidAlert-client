@@ -1,10 +1,8 @@
-import {
-  FetchArgs,
-  fetchBaseQuery,
-} from '@reduxjs/toolkit/query/react'
+import { SERVER_BASE_URL } from '@/shared/config'
+import { FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const customFetchBaseQuery = (basePath: string) => {
-  const baseUrl = `http://localhost:5000/${basePath}`
+  const baseUrl = `${SERVER_BASE_URL}/${basePath}`
   const baseQuery = fetchBaseQuery({ baseUrl })
 
   return async (args: string | FetchArgs, api: any, extraOptions: any) => {
