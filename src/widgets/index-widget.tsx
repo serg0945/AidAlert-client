@@ -3,7 +3,6 @@ import { TestCollection } from '@/entities/test'
 import { FC } from 'react'
 import MainPageFirst from '@/shared/assets/images/home-page-first.jpg'
 import MainPageTests from '@/shared/assets/images/home-page-tests.jpg'
-import Aboba from '@/shared/assets/images/Aboba.svg'
 
 export const IndexWidget: FC = () => {
   return (
