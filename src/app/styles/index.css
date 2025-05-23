@@ -1,0 +1,61 @@
+@import 'tailwindcss';
+
+* {
+  font:
+    400 17px / 1.35 'Source Serif Pro Lenta',
+    serif;
+}
+
+a {
+  color: rgba(6, 6, 15, 0.87);
+}
+
+a:hover {
+  color: var(--color-emerald-500);
+}
+
+h1 {
+  font:
+    900 32px / 35px Lato Lenta,
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font:
+    900 28px / 32px Lato Lenta,
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+h3 {
+  font:
+    900 22px / 26px Lato Lenta,
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+:where(.css-dev-only-do-not-override-1m63z2v).ant-radio-wrapper
+  .ant-radio-checked
+  .ant-radio-inner {
+  background-color: var(--color-emerald-500);
+  border-color: var(--color-emerald-500);
+}
+
+:where(.css-dev-only-do-not-override-1m63z2v).ant-btn-variant-outlined:not(
+    :disabled
+  ):not(.ant-btn-disabled):hover {
+  border-color: var(--color-emerald-500);
+  color: var(--color-emerald-500);
+}
