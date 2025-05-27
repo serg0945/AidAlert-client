@@ -1,6 +1,6 @@
 import {
   AuthPayload,
-  useAuthorizationMutation,
+  // useAuthorizationMutation,
   useCreateAuthMutation,
 } from '@/features/auth'
 import { FORM_RULES } from '@/shared/config'
