@@ -10,7 +10,7 @@ import { FC } from 'react'
 
 export const AuthForm: FC = () => {
   const [form] = useForm()
-  const [auth] = useAuthorizationMutation()
+  // const [auth] = useAuthorizationMutation()
   const [createAuth] = useCreateAuthMutation()
 
   const onFinish: FormProps<AuthPayload>['onFinish'] = async (values) => {
