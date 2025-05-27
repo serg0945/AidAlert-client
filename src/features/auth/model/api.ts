@@ -30,7 +30,18 @@ export const authApi = createApi({
         }
       },
     }),
+    createAuth: build.mutation<boolean, AuthPayload>({
+      query: (body) => ({
+        url: '',
+        method: 'POST',
+        body: body,
+      }),
+    }),
   }),
 })
 
-export const { useAuthorizationMutation, useGetPassQuery } = authApi
+export const {
+  useAuthorizationMutation,
+  useGetPassQuery,
+  useCreateAuthMutation,
+} = authApi

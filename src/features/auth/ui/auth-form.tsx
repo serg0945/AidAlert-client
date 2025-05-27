@@ -1,4 +1,8 @@
-import { AuthPayload, useAuthorizationMutation } from '@/features/auth'
+import {
+  AuthPayload,
+  useAuthorizationMutation,
+  useCreateAuthMutation,
+} from '@/features/auth'
 import { FORM_RULES } from '@/shared/config'
 import { Button, Form, Input } from 'antd'
 import { FormProps, useForm } from 'antd/es/form/Form'
@@ -7,9 +11,14 @@ import { FC } from 'react'
 export const AuthForm: FC = () => {
   const [form] = useForm()
   const [auth] = useAuthorizationMutation()
+  const [createAuth] = useCreateAuthMutation()
 
   const onFinish: FormProps<AuthPayload>['onFinish'] = async (values) => {
-    await auth({ ...values }).unwrap()
+    await createAuth({
+      ...values,
+      //@ts-ignore
+      dateLogin: '2025-05-21T21:18:06.861Z',
+    }).unwrap()
   }
 
   return (
