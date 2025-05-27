@@ -1,6 +1,4 @@
-import { BurgerMenu } from '@/features/burger-menu'
 import { Logo } from '@/shared/assets/icons'
-import { useResize } from '@/shared/hooks'
 import { Link } from '@tanstack/react-router'
 import { FC } from 'react'
 
