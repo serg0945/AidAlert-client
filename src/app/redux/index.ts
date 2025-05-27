@@ -1,5 +1,4 @@
 export * from './hooks'
 export * from './reducer'
-export * from './selector'
 export * from './store'
 export * from './types'
