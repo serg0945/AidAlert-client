@@ -1,3 +1,4 @@
+import '@/app/styles/normalize.css'
 import '@/app/styles/index.css'
 import '@ant-design/v5-patch-for-react-19'
 import { routeTree } from '@/routeTree.gen'
@@ -17,11 +18,6 @@ const router = createRouter({
     </div>
   ),
   defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
-  context: {
-    auth: undefined!,
-  },
-  defaultPreload: 'intent',
-  scrollRestoration: true,
 })
 
 declare module '@tanstack/react-router' {
@@ -31,17 +27,26 @@ declare module '@tanstack/react-router' {
 }
 
 export const App = () => {
+  sessionStorage.setItem('isShowAdminNav', 'false')
   return (
-    <Antd.App>
-      <RouterProvider router={router} />
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        newestOnTop
-        closeOnClick={false}
-        pauseOnHover
-        className="mt-4"
-      />
-    </Antd.App>
+    <Antd.ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#37ad5f',
+        },
+      }}
+    >
+      <Antd.App>
+        <RouterProvider router={router} />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          newestOnTop
+          closeOnClick={false}
+          pauseOnHover
+          className="mt-4"
+        />
+      </Antd.App>
+    </Antd.ConfigProvider>
   )
 }

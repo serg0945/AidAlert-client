@@ -10,12 +10,12 @@ export const TestWidget: FC = () => {
 
   return (
     <>
-      <h1 className="pb-10">Тесты</h1>
-      <h3>Выберете категорию</h3>
+      <h1 className="pb-4">Тесты</h1>
+      <h3>Выберите категорию</h3>
       <CategoryCollection />
       <TestCollection />
       {isAdmin && (
-        <div className="mt-6">
+        <div className="mt-4">
           <Button onClick={() => setIsAddTest(true)}>Добавить тест</Button>
         </div>
       )}

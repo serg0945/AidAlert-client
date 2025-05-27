@@ -5,12 +5,12 @@ import {
   CategoryItemAdmin,
   useDeleteCategoryMutation,
   useGetCategoryImagesMutation,
-  setSelectedCategoryId,
 } from '@/entities/category'
 import { useIsAdmin, useIsCategory } from '@/shared/hooks'
+import { DeleteConfirmButton } from '@/shared/ui/delete-confirm-button'
 import { Button } from 'antd'
 import { FC, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export const CategoryCollection: FC = () => {
   const [isShowCreate, setIsShowCreate] = useState<boolean>(false)
@@ -20,7 +20,6 @@ export const CategoryCollection: FC = () => {
   const selectedCategoryId = useSelector(
     (state: AppState) => state.category.selectedCategoryId,
   )
-  const dispatch = useDispatch()
 
   const isAdmin = useIsAdmin()
   const isCategory = useIsCategory()
@@ -48,23 +47,21 @@ export const CategoryCollection: FC = () => {
       </div>
       {isAdmin && isCategory && (
         <>
-          <Button onClick={() => setIsShowCreate(true)} className="my-6 mr-2">
+          <Button onClick={() => setIsShowCreate(true)} className="!mt-6 mr-2">
             Создать категорию
           </Button>
-          <Button
-            disabled={selectedCategoryId === ''}
-            onClick={() => {
-              remove({ _id: selectedCategoryId })
-              dispatch(setSelectedCategoryId(''))
-            }}
-          >
-            Удалить категорию
-          </Button>
+          <DeleteConfirmButton
+            title="категорию"
+            selectedId={selectedCategoryId}
+            onClick={() => remove({ _id: selectedCategoryId })}
+          />
         </>
       )}
-      {isShowCreate && <CategoryItemAdmin title="Создать категорию" />}
+      {isShowCreate && (
+        <CategoryItemAdmin title="Создать категорию" method="POST" />
+      )}
       {isCategory && selectedCategoryId !== '' && (
-        <CategoryItemAdmin title="Изменить категорию" />
+        <CategoryItemAdmin title="Изменить категорию" method="PATCH" />
       )}
     </>
   )

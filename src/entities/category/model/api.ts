@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { customFetchBaseQuery, showNotifyApi } from '@/shared/lib'
-import { GategoryItemData, EditCategory } from '@/entities/category'
+import { GategoryItemData } from '@/entities/category'
 
 export const categoryApi = createApi({
   reducerPath: 'categoryApi',
@@ -31,15 +31,20 @@ export const categoryApi = createApi({
       }),
       invalidatesTags: ['Category'],
       async onQueryStarted(_, { queryFulfilled }) {
-        await showNotifyApi(queryFulfilled, 'Успешно создали категорию')
+        await showNotifyApi(
+          queryFulfilled,
+          'Успешно создали категорию',
+          'Возможно вы не загрузили картинку',
+        )
       },
     }),
-    editCategory: build.mutation<void, EditCategory>({
-      query: ({ _id, body }) => ({
-        url: `/${_id}`,
+    editCategory: build.mutation<void, FormData>({
+      query: (body) => ({
+        url: '',
         method: 'PATCH',
         body,
       }),
+      invalidatesTags: ['Category'],
       async onQueryStarted(_, { queryFulfilled }) {
         await showNotifyApi(queryFulfilled, 'Успешно изменили категорию')
       },

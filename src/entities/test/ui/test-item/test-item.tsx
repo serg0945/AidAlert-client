@@ -14,10 +14,10 @@ export const TestItem: FC = () => {
   const [rightAnswersValue, setRightAnswersValue] = useState<number>(0)
   const [isGetRightAnswers, setIsGetRightAnswers] = useState<boolean>(false)
 
-  const onChange = (itemId: string, value: number) => {
+  const onChange = (question: string, value: number) => {
     setSelectedValues((prev: SelectedAnswerValue) => ({
       ...prev,
-      [itemId]: value,
+      [question]: value,
     }))
   }
 
@@ -27,41 +27,42 @@ export const TestItem: FC = () => {
   }
 
   return (
-    <div className="flex flex-col">
-      <h1>Тест</h1>
-      <h3 className="mt-6">Автор: {test?.title}</h3>
-      <h3 className="mt-2">Название: {test?.title}</h3>
-      {test?.data.map((item) => (
-        <div
-          className="my-4 border border-gray-300 p-4 rounded-xl"
-          key={item._id}
-        >
-          <p>{item.question}</p>
-          <Radio.Group
-            onChange={(e) => onChange(item._id, e.target.value)}
-            className="!flex !flex-col !mt-4 !accent-amber-700"
-            options={item.answers.map((answer) => ({
-              value: answer.value,
-              label: (
-                <p
-                  style={{
-                    borderColor: isGetRightAnswers
-                      ? answer.color
-                      : 'var(--color-gray-400)',
-                  }}
-                  className="border my-3 p-2 rounded-[4px]"
-                >
-                  {answer.content}
-                </p>
-              ),
-            }))}
-          />
-        </div>
-      ))}
+    <>
+      <div className="flex flex-col">
+        <h1 className="!mb-0">{test?.title}</h1>
+        <h3 className="mt-6 text-gray-500">{test?.owner}</h3>
+        {test?.data.map((item, index) => (
+          <div
+            className="my-4 border border-gray-300 p-4 rounded-xl"
+            key={index}
+          >
+            <p className="!text-xl">{item.question}</p>
+            <Radio.Group
+              onChange={(e) => onChange(item.question, e.target.value)}
+              className="!flex !flex-col !mt-4"
+              options={item.answers.map((answer) => ({
+                value: answer.value,
+                label: (
+                  <p
+                    style={{
+                      borderColor: isGetRightAnswers
+                        ? `${answer.color}`
+                        : 'var(--color-gray-300)',
+                    }}
+                    className="border my-3 p-2 rounded-[4px]"
+                  >
+                    {answer.content}
+                  </p>
+                ),
+              }))}
+            />
+          </div>
+        ))}
+      </div>
       {test?.data && (
         <Button
           disabled={test?.data.length !== Object.keys(selectedValues).length}
-          className="mt-5"
+          className="!mt-4"
           onClick={() => {
             setIsGetRightAnswers(true)
             setRightAnswersValue(
@@ -72,9 +73,9 @@ export const TestItem: FC = () => {
           Далее
         </Button>
       )}
-      <p>
-        {rightAnswersValue} / {test?.data.length}
-      </p>
+      <h3 className="mt-6">
+        Итоговый результат: {rightAnswersValue} / {test?.data.length}
+      </h3>
       <Button
         className="mt-2"
         onClick={resetTest}
@@ -82,6 +83,6 @@ export const TestItem: FC = () => {
       >
         Сбросить
       </Button>
-    </div>
+    </>
   )
 }

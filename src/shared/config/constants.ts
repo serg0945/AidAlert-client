@@ -11,3 +11,10 @@ export const FORM_RULES = [
     message: 'Обязательное поле',
   },
 ]
+
+export const ALLOWED_TYPES_IMAGE = [
+  'image/jpeg',
+  'image/svg+xml',
+  'image/png',
+  'image/jpg',
+]

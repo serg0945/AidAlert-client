@@ -6,8 +6,8 @@ import {
 } from '@/entities/test'
 import { useIsAdmin, useIsIndex } from '@/shared/hooks'
 import { EmptyCollection } from '@/shared/ui'
+import { DeleteConfirmButton } from '@/shared/ui/delete-confirm-button'
 import { Link } from '@tanstack/react-router'
-import { Button } from 'antd'
 import cn from 'classnames'
 import { FC, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -34,12 +34,11 @@ export const TestCollection: FC = () => {
 
   const tests = isIndex ? testsRandom : testsByCategory
 
-  const link = isAdmin ? '/admin/test/$_id' : '/test/$_id'
-
   return (
     <>
+      <h3 className="mt-8">Выберите тест</h3>
       <div
-        className={cn('my-6 flex flex-col gap-6 rounded-xl', {
+        className={cn('mb-6 flex flex-col gap-6 rounded-xl', {
           'border p-4 border-gray-300': tests && tests?.length !== 0,
         })}
       >
@@ -50,7 +49,7 @@ export const TestCollection: FC = () => {
             disabled={isAdmin}
             params={{ _id: item._id }}
             className={cn(
-              'hover:bg-emerald-300 border cursor-pointer rounded-[4px] py-2 px-4',
+              'border cursor-pointer rounded-[4px] py-2 px-4 border-gray-400 hover:border-emerald-500',
               {
                 '!border-emerald-500': selectedTestId === item._id,
               },
@@ -64,29 +63,30 @@ export const TestCollection: FC = () => {
           </Link>
         ))}
       </div>
+      {tests?.length === 0 && (
+        <EmptyCollection title="Нет тестов по данной категории" />
+      )}
       {isAdmin && (
         <Link
-          to={link}
+          to="/admin/test/$_id"
           disabled={selectedTestId === ''}
           params={{ _id: selectedTestId }}
           key={selectedTestId}
-          className={cn('border py-1 px-3', {
-            '!bg-gray-100': selectedTestId === '',
+          className={cn('border py-1 px-3 rounded-[4px] border-gray-300', {
+            '!bg-gray-100 !text-gray-300 hover:cursor-not-allowed':
+              selectedTestId === '',
+            '!text-black cursor-pointer': selectedTestId !== '',
           })}
         >
-          Перейти
+          Изменить тест
         </Link>
       )}
       {isAdmin && (
-        <Button
-          disabled={selectedTestId === ''}
+        <DeleteConfirmButton
+          title="тест"
           onClick={() => remove({ _id: selectedTestId })}
-        >
-          Удалить тест
-        </Button>
-      )}
-      {tests?.length === 0 && (
-        <EmptyCollection title="Нет тестов по данной категории" />
+          selectedId={selectedTestId}
+        />
       )}
     </>
   )

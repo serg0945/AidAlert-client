@@ -7,7 +7,7 @@ export const Route = createFileRoute('/admin/post/')({
   beforeLoad: () => {},
   component: () => (
     <>
-      <title>Тесты</title>
+      <title>Статьи</title>
       <Redirect>
         <Layout>
           <PostsWidget />

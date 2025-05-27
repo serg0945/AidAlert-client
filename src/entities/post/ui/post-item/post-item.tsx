@@ -1,6 +1,5 @@
 import { useGetPostImagesMutation, useGetPostOneQuery } from '@/entities/post'
 import { useParams } from '@tanstack/react-router'
-import { Typography } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 import { FC, useEffect, useState } from 'react'
 
@@ -40,14 +39,18 @@ export const PostItem: FC = () => {
   }, [images])
 
   return (
-    <div className="flex flex-col gap-6">
-      <Typography.Text>{post?.title}</Typography.Text>
-      <Typography.Text>{post?.owner}</Typography.Text>
+    <div className="flex flex-col gap-6 px-60">
+      <h1 className="!mb-0">{post?.title}</h1>
+      <h3 className="text-gray-500">{post?.owner}</h3>
       {data.map((block, blockIndex) => (
         <div className="flex flex-col gap-6" key={blockIndex}>
-          <TextArea autoSize value={block.content ?? ''} />
+          <TextArea
+            autoSize
+            value={block.content ?? ''}
+            className="!border-none !p-0"
+          />
           {block.image && (
-            <img className="w-[200px]" src={block.image} alt="Картинка" />
+            <img className="max-w-full" src={block.image} alt="Картинка" />
           )}
         </div>
       ))}

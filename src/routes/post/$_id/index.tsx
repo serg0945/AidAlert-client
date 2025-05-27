@@ -6,7 +6,7 @@ export const Route = createFileRoute('/post/$_id/')({
   beforeLoad: () => {},
   component: () => (
     <>
-      <title>aboba</title>
+      <title>Статья</title>
       <Layout>
         <PostItem />
       </Layout>

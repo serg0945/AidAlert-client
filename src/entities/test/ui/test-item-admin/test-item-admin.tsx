@@ -4,8 +4,9 @@ import {
   TestItemData,
   useCreateTestMutation,
   useGetTestOneQuery,
-  usePutTestMutation,
+  useUpdateTestMutation,
 } from '@/entities/test'
+import { DeleteConfirmButton } from '@/shared/ui/delete-confirm-button'
 import { useParams } from '@tanstack/react-router'
 import { Button, Input } from 'antd'
 import { FC, useEffect, useState } from 'react'
@@ -15,7 +16,7 @@ export const TestItemAdmin: FC = () => {
   const { _id } = useParams({ strict: false })
   const { data: test } = useGetTestOneQuery({ _id }, { skip: !_id })
   const [save] = useCreateTestMutation()
-  const [put] = usePutTestMutation()
+  const [update] = useUpdateTestMutation()
   const [data, setData] = useState<Omit<TestItemData, '_id'>[]>([])
   const [title, setTitle] = useState<string>('')
   const [valueCounter, setValueCounter] = useState(1)
@@ -30,9 +31,16 @@ export const TestItemAdmin: FC = () => {
     setData([...data, { question: '', answers: [] }])
   }
 
+  const deleteBlock = (index: number) => {
+    const newData = [...data]
+    newData.splice(index, 1)
+    setData(newData)
+  }
+
   useEffect(() => {
     if (test) {
       setTitle(test.title ?? '')
+      setOwner(test.owner ?? '')
       setData(test.data ?? [])
       const initialCounter = test.data.reduce((max, block) => {
         const maxValue = block.answers.reduce(
@@ -53,15 +61,23 @@ export const TestItemAdmin: FC = () => {
       value: valueCounter,
     }
 
-    const newData = [...data]
-    newData[index].answers.push(newAnswer)
+    const newData = data.map((item, idx) => {
+      if (idx === index) {
+        return {
+          ...item,
+          answers: [...item.answers, newAnswer],
+        }
+      }
+      return item
+    })
+
     setData(newData)
     setValueCounter(valueCounter + 1)
   }
 
   const handleBlockChange = (index: number, value: string) => {
     const newData = [...data]
-    newData[index].question = value
+    newData[index] = { ...newData[index], question: value }
     setData(newData)
   }
 
@@ -71,24 +87,41 @@ export const TestItemAdmin: FC = () => {
     field: keyof TestItemAnswer,
     value: string | boolean,
   ) => {
-    const newData = [...data]
+    const newData = data.map((block, bIndex) => {
+      if (bIndex === blockIndex) {
+        const newAnswers = block.answers.map((answer, aIndex) => {
+          let updatedAnswer = { ...answer }
 
-    switch (field) {
-      case 'value':
-        newData[blockIndex].answers[answerIndex][field] = +value as number
-        break
-      case 'content':
-      case 'color':
-        newData[blockIndex].answers[answerIndex][field] = value as string
-        break
-      case 'isTrue':
-        newData[blockIndex].answers.forEach(
-          (answer: TestItemAnswer, index: number) => {
-            answer.isTrue = index === answerIndex
-          },
-        )
-        break
-    }
+          if (aIndex === answerIndex) {
+            if (field === 'isTrue') {
+              updatedAnswer.isTrue = value as boolean
+              updatedAnswer.color = value ? 'green' : 'red'
+            } else {
+              //@ts-ignore
+              updatedAnswer[field] =
+                field === 'value' ? (+value as number) : (value as string)
+            }
+          } else {
+            updatedAnswer.isTrue = false
+            updatedAnswer.color = 'red'
+          }
+
+          return updatedAnswer
+        })
+
+        newAnswers.forEach((answer) => {
+          if (answer.isTrue) {
+            answer.color = 'green'
+          }
+        })
+
+        return {
+          ...block,
+          answers: newAnswers,
+        }
+      }
+      return block
+    })
 
     setData(newData)
   }
@@ -96,9 +129,9 @@ export const TestItemAdmin: FC = () => {
   const handleSaveTest = () => {
     const payload = {
       ...{ data, title, owner },
-      categoryId: isCreate ? selectedCategoryId : test?.categoryId,
+      categoryId: isCreate ? selectedCategoryId : undefined,
     }
-    isCreate ? save(payload) : put({ ...payload, _id })
+    isCreate ? save(payload) : update({ ...payload, _id })
   }
 
   return (
@@ -150,9 +183,17 @@ export const TestItemAdmin: FC = () => {
               />
             </div>
           ))}
-          <Button className="my-4" onClick={() => addQuestion(blockIndex)}>
+          <Button
+            className="!mt-4 mr-2"
+            onClick={() => addQuestion(blockIndex)}
+          >
             Добавить ответ
           </Button>
+          <DeleteConfirmButton
+            title="блок"
+            onClick={() => deleteBlock(blockIndex)}
+            selectedId="test"
+          />
         </div>
       ))}
       <div className="pt-4 flex justify-between">

@@ -6,7 +6,7 @@ interface EmptyCollectionProps {
 }
 
 export const EmptyCollection: FC<EmptyCollectionProps> = ({ title }) => (
-  <div className="mt-15">
+  <div className="my-10">
     <img src={SadSmile} />
     <p className="!text-[20px] pt-4">{title}</p>
   </div>

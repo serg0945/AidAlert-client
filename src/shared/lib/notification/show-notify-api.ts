@@ -8,6 +8,7 @@ export const showNotifyApi = async (
   try {
     await queryFulfilled
     notify(success)
+    sessionStorage.setItem('isShowAdminNav', 'true')
   } catch {
     notify(error)
   }

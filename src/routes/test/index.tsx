@@ -6,7 +6,7 @@ export const Route = createFileRoute('/test/')({
   beforeLoad: () => {},
   component: () => (
     <>
-      <title>Статьи</title>
+      <title>Тесты</title>
       <Layout>
         <TestWidget />
       </Layout>

@@ -19,10 +19,15 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['Auth'],
       async onQueryStarted(_, { queryFulfilled }) {
-        await showNotifyApi(queryFulfilled, undefined, 'Неверные данные')
-        setTimeout(() => {
-          window.history.pushState(null, '', '/admin')
-        }, 200)
+        try {
+          sessionStorage.setItem('isShowAdminNav', 'false')
+          await showNotifyApi(queryFulfilled, undefined, 'Неверные данные')
+          setTimeout(() => {
+            window.history.pushState(null, '', '/admin')
+          }, 200)
+        } catch {
+          throw new Error('Ошибка')
+        }
       },
     }),
   }),

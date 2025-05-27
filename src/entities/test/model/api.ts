@@ -5,13 +5,14 @@ import { customFetchBaseQuery, showNotifyApi } from '@/shared/lib'
 export const testApi = createApi({
   reducerPath: 'testApi',
   baseQuery: customFetchBaseQuery('tests'),
-  tagTypes: ['Test'],
+  tagTypes: ['Test', 'TestOne'],
   endpoints: (build) => ({
     getTestOne: build.query<TestOne, { _id?: string }>({
       query: (_id) => ({
         url: '',
         params: _id,
       }),
+      providesTags: ['Test'],
     }),
     getTestRandom: build.query<Test[], void>({
       query: () => ({
@@ -36,12 +37,13 @@ export const testApi = createApi({
         await showNotifyApi(queryFulfilled, 'Успешно создали тест')
       },
     }),
-    putTest: build.mutation<void, Test>({
+    updateTest: build.mutation<void, Test>({
       query: (body) => ({
         url: '',
-        method: 'PUT',
+        method: 'PATCH',
         body,
       }),
+      invalidatesTags: ['Test'],
       async onQueryStarted(_, { queryFulfilled }) {
         await showNotifyApi(queryFulfilled, 'Успешно изменили тест')
       },
@@ -64,6 +66,6 @@ export const {
   useGetTestRandomQuery,
   useGetTestsByCategoryIdQuery,
   useCreateTestMutation,
-  usePutTestMutation,
+  useUpdateTestMutation,
   useDeleteTestMutation,
 } = testApi

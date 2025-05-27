@@ -15,12 +15,12 @@ export const PostsWidget: FC = () => {
 
   return (
     <>
-      <h1 className="pb-10">Статьи</h1>
-      <h3>Выберете категорию</h3>
+      <h1 className="pb-4">Статьи</h1>
+      <h3>Выберите категорию</h3>
       <CategoryCollection />
       {!!selectedId && <PostTitleCollection />}
       {isAdmin && (
-        <Button onClick={() => setIsShowCreate(true)} className="my-8">
+        <Button onClick={() => setIsShowCreate(true)} className="!mt-4">
           Создать статью
         </Button>
       )}

@@ -12,20 +12,19 @@ export const Layout: FC<{ children: ReactElement }> = ({ children }) => {
     isScreenMob,
     isScreenMobBig,
   } = useResize()
+
+  const paddingX = cn('pt-[20px] grow', {
+    'px-[300px]': isScreenPc,
+    'px-[250px]': isScreenPcSmall,
+    'px-[100px]': isScreenTab || isScreenMobBig,
+    'px-[50px]': isScreenMob,
+  })
+
   return (
     <div className="flex flex-col h-[100vh]">
-      <Header />
-      <main
-        className={cn('pt-[20px] grow', {
-          'px-[300px]': isScreenPc,
-          'px-[250px]': isScreenPcSmall,
-          'px-[100px]': isScreenTab || isScreenMobBig,
-          'px-[50px]': isScreenMob,
-        })}
-      >
-        {children}
-      </main>
-      <Footer />
+      <Header paddingX={paddingX} />
+      <main className={paddingX}>{children}</main>
+      <Footer paddingX={paddingX} />
     </div>
   )
 }

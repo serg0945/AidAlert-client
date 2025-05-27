@@ -13,6 +13,9 @@ export const Redirect = ({ children }: { children: ReactNode }) => {
 
   if (shouldFetchPass && pass !== undefined && !pass)
     window.history.pushState(null, '', '/auth')
+  else if (shouldFetchPass && pass) {
+    sessionStorage.setItem('isShowAdminNav', 'true')
+  }
 
   return <>{pass && children}</>
 }

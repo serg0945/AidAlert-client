@@ -5,6 +5,7 @@ import {
   useGetPostOneQuery,
   useEditPostMutation,
 } from '@/entities/post'
+import { DeleteConfirmButton } from '@/shared/ui/delete-confirm-button'
 import { useParams } from '@tanstack/react-router'
 import { Button, Input } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
@@ -61,6 +62,12 @@ export const PostItemAdmin: FC = () => {
     setData(newData)
   }
 
+  const handleDeleteBlock = (index: number) => {
+    const newData = [...data]
+    newData.splice(index, 1)
+    setData(newData)
+  }
+
   const handleSubmit = () => {
     const formData = new FormData()
 
@@ -71,8 +78,8 @@ export const PostItemAdmin: FC = () => {
       images: data.map((block) => block.image),
     }
 
-    formData.append('title', 'абоба')
-    formData.append('owner', '123')
+    formData.append('title', title)
+    formData.append('owner', owner)
     isEdit && formData.append('_id', _id)
     formData.append('categoryId', selectedCategoryId)
 
@@ -89,15 +96,7 @@ export const PostItemAdmin: FC = () => {
   }
 
   return (
-    <div className="flex-col flex gap-6">
-      {isEdit && (
-        <Button
-          onClick={() => setIsShowPreviewImages(false)}
-          disabled={!isShowPreviewImages}
-        >
-          Удалить прошлые картинки
-        </Button>
-      )}
+    <div className="flex-col flex gap-6 mt-8">
       <Input
         placeholder="Введите заголовок статьи"
         addonBefore="Заголовок"
@@ -110,9 +109,11 @@ export const PostItemAdmin: FC = () => {
         value={owner}
         onChange={(e) => setOwner(e.target.value)}
       />
-      <Button onClick={addBlock}>Добавить блок</Button>
       {data.map((block, blockIndex) => (
-        <div className="flex flex-col gap-6" key={blockIndex}>
+        <div
+          className="flex flex-col gap-6 border p-4 rounded-xl"
+          key={blockIndex}
+        >
           <TextArea
             placeholder="Введите контент блока"
             value={block.content}
@@ -132,19 +133,34 @@ export const PostItemAdmin: FC = () => {
               }
             }}
           />
+          <DeleteConfirmButton
+            title="блок"
+            onClick={() => handleDeleteBlock(blockIndex)}
+            selectedId="post"
+            className="mt-0"
+          />
           {!isShowPreviewImages ||
             (isCreate && block.image && (
               <img
-                className="w-[100px]"
+                className="max-w-full"
                 src={URL.createObjectURL(block.image)}
                 alt="Картинка"
               />
             ))}
           {isShowPreviewImages && images && (
-            <img className="w-[100px]" src={images[blockIndex]} />
+            <img className="max-w-full" src={images[blockIndex]} />
           )}
         </div>
       ))}
+      <Button onClick={addBlock}>Добавить блок</Button>
+      {isEdit && (
+        <DeleteConfirmButton
+          title="прошлые картинки"
+          onClick={() => setIsShowPreviewImages(false)}
+          selectedId="post"
+          className="mt-0"
+        />
+      )}
       <Button onClick={handleSubmit}>Сохранить</Button>
     </div>
   )
