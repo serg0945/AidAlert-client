@@ -34,7 +34,10 @@ export const PostItemAdmin: FC = () => {
     setOwner(post?.owner ?? '')
     if (post?.imageFileNames && post?.imageFileNames.length !== 0) {
       getImages(post?.imageFileNames)
-    } else if (post?.imageFileNames && post?.imageFileNames.length === 0) {
+    } else if (
+      (post?.imageFileNames && post?.imageFileNames.length === 0) ||
+      isCreate
+    ) {
       setIsShowPreviewImages(false)
     }
     post &&
@@ -47,6 +50,8 @@ export const PostItemAdmin: FC = () => {
         }),
       )
   }, [post])
+
+  console.log(isShowPreviewImages)
 
   const addBlock = () => {
     setData([...data, { content: '', image: null }])
@@ -96,72 +101,78 @@ export const PostItemAdmin: FC = () => {
   }
 
   return (
-    <div className="flex-col flex gap-6 mt-8">
-      <Input
-        placeholder="Введите заголовок статьи"
-        addonBefore="Заголовок"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <Input
-        placeholder="Введите автора статьи"
-        addonBefore="Автор"
-        value={owner}
-        onChange={(e) => setOwner(e.target.value)}
-      />
-      {data.map((block, blockIndex) => (
-        <div
-          className="flex flex-col gap-6 border p-4 rounded-xl"
-          key={blockIndex}
-        >
-          <TextArea
-            placeholder="Введите контент блока"
-            value={block.content}
-            onChange={(e) =>
-              handleBlockChange(blockIndex, 'content', e.target.value)
-            }
-          />
-          <Input
-            type="file"
-            addonBefore="Картинка"
-            disabled={!isCreate && isShowPreviewImages}
-            onChange={(e) => {
-              const files = e.target.files
-              if (files && files[0]) {
-                const file = files[0]
-                handleBlockChange(blockIndex, 'image', file)
+    <>
+      <div className="flex-col flex gap-6 mt-8">
+        <Input
+          placeholder="Введите заголовок статьи"
+          addonBefore="Заголовок"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <Input
+          placeholder="Введите автора статьи"
+          addonBefore="Автор"
+          value={owner}
+          onChange={(e) => setOwner(e.target.value)}
+        />
+        {data.map((block, blockIndex) => (
+          <div
+            className="flex flex-col gap-6 border p-4 rounded-xl"
+            key={blockIndex}
+          >
+            <TextArea
+              placeholder="Введите контент блока"
+              value={block.content}
+              onChange={(e) =>
+                handleBlockChange(blockIndex, 'content', e.target.value)
               }
-            }}
-          />
-          <DeleteConfirmButton
-            title="блок"
-            onClick={() => handleDeleteBlock(blockIndex)}
-            selectedId="post"
-            className="mt-0"
-          />
-          {!isShowPreviewImages ||
-            (isCreate && block.image && (
-              <img
-                className="max-w-full"
-                src={URL.createObjectURL(block.image)}
-                alt="Картинка"
-              />
-            ))}
-          {isShowPreviewImages && images && (
-            <img className="max-w-full" src={images[blockIndex]} />
+            />
+            <Input
+              type="file"
+              addonBefore="Картинка"
+              disabled={!isCreate && isShowPreviewImages}
+              onChange={(e) => {
+                const files = e.target.files
+                if (files && files[0]) {
+                  const file = files[0]
+                  handleBlockChange(blockIndex, 'image', file)
+                }
+              }}
+            />
+            {isShowPreviewImages && images && (
+              <img className="max-w-full" src={images[blockIndex]} />
+            )}
+            <DeleteConfirmButton
+              title="блок"
+              onClick={() => handleDeleteBlock(blockIndex)}
+              selectedId="post"
+              className="mt-0"
+            />
+            {!isShowPreviewImages ||
+              (isCreate && block.image && (
+                <img
+                  className="max-w-full"
+                  src={URL.createObjectURL(block.image)}
+                  alt="Картинка"
+                />
+              ))}
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-between items-center">
+        <div className="flex flex-col gap-4 mt-6">
+          <Button onClick={addBlock}>Добавить блок</Button>
+          {isEdit && (
+            <DeleteConfirmButton
+              title="прошлые картинки"
+              onClick={() => setIsShowPreviewImages(false)}
+              selectedId="post"
+              className="mt-0"
+            />
           )}
         </div>
-      ))}
-      <Button onClick={addBlock}>Добавить блок</Button>
-      {isEdit && (
-        <DeleteConfirmButton
-          title="прошлые картинки"
-          onClick={() => setIsShowPreviewImages(false)}
-          selectedId="post"
-          className="mt-0"
-        />
-      )}
-      <Button onClick={handleSubmit}>Сохранить</Button>
-    </div>
+        <Button onClick={handleSubmit}>Сохранить статью</Button>
+      </div>
+    </>
   )
 }

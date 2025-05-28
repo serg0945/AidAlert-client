@@ -61,23 +61,25 @@ export const CategoryItemAdmin: FC<CategoryItemAdminProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-6 border p-4 my-6 rounded-xl border-gray-300">
-      <h2>{title}</h2>
-      <Input onChange={(e) => setName(e.target.value)} value={name} />
-      <Input type="file" onChange={(e) => handleChangeImage(e)} />
-      {image && (
-        <div className="flex items-center">
-          <img
-            className="w-[100px]"
-            src={URL.createObjectURL(image)}
-            alt="Картинка"
-          />
-          <button onClick={() => setImage(undefined)} className="ml-2">
-            Очистить
-          </button>
-        </div>
-      )}
+    <>
+      <div className="flex flex-col gap-6 border p-4 my-6 rounded-xl border-gray-300">
+        <h2>{title}</h2>
+        <Input onChange={(e) => setName(e.target.value)} value={name} />
+        <Input type="file" onChange={(e) => handleChangeImage(e)} />
+        {image && (
+          <div className="flex items-center">
+            <img
+              className="w-[100px]"
+              src={URL.createObjectURL(image)}
+              alt="Картинка"
+            />
+            <button onClick={() => setImage(undefined)} className="ml-2">
+              Очистить
+            </button>
+          </div>
+        )}
+      </div>
       <Button onClick={handleSubmit}>Сохранить категорию</Button>
-    </div>
+    </>
   )
 }
