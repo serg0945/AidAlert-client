@@ -1,11 +1,10 @@
 import { FC, useState } from 'react'
 import { BurgerMenuIcon, CancelIcon } from '@/shared/assets/icons'
 import { Link } from '@tanstack/react-router'
-import { useIsAdmin } from '@/shared/hooks'
 
-export const BurgerMenu: FC = () => {
+export const BurgerMenu: FC<{ pass: boolean }> = ({ pass }) => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false)
-  const isAdmin = useIsAdmin()
+
   return (
     <>
       {!isShowMenu ? (
@@ -33,7 +32,7 @@ export const BurgerMenu: FC = () => {
                 Тесты
               </Link>
             </div>
-            {isAdmin && (
+            {pass && (
               <div className="flex flex-col gap-4">
                 <Link className="!text-red-800" to="/admin/categories">
                   Категории

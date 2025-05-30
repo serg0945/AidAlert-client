@@ -21,7 +21,12 @@ export const CategoryItem: FC<GategoryItemData> = (props) => {
       )}
       onClick={() => dispatch(setSelectedCategoryId(_id))}
     >
-      <p className="pb-2">{name}</p>
+      <p
+        className="pb-2 text-center overflow-hidden text-ellipsis whitespace-nowrap w-full"
+        title={name}
+      >
+        {name}
+      </p>
       {image && <img src={image} className="w-20" />}
     </div>
   )

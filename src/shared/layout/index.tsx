@@ -5,19 +5,14 @@ import cn from 'classnames'
 import { useResize } from '@/shared/hooks'
 
 export const Layout: FC<{ children: ReactElement }> = ({ children }) => {
-  const {
-    isScreenPc,
-    isScreenPcSmall,
-    isScreenTab,
-    isScreenMob,
-    isScreenMobBig,
-  } = useResize()
+  const { isScreenPc, isScreenMob, isScreenMobBig, isScreenPcSmall } =
+    useResize()
 
   const paddingX = cn('pt-[20px] grow', {
     'px-[300px]': isScreenPc,
-    'px-[250px]': isScreenPcSmall,
-    'px-[100px]': isScreenTab || isScreenMobBig,
-    'px-[50px]': isScreenMob,
+    'px-[100px]': isScreenPcSmall,
+    'px-[70px]': isScreenMobBig,
+    'px-[20px]': isScreenMob,
   })
 
   return (

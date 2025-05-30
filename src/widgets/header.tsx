@@ -1,48 +1,60 @@
+import { useGetPassQuery } from '@/features/auth'
+import { BurgerMenu } from '@/features/burger-menu'
 import { Logo } from '@/shared/assets/icons'
+import { useResize } from '@/shared/hooks'
 import { Link } from '@tanstack/react-router'
 import { FC } from 'react'
+import cn from 'classnames'
 
 export const Header: FC<{ paddingX: string }> = ({ paddingX }) => {
-  // const { isScreenMd } = useResize()
-  const isShowAdminNav = sessionStorage.getItem('isShowAdminNav')
+  const { isScreenMobBig } = useResize()
+  const token = localStorage.getItem('token') ?? ''
+  const { data: pass } = useGetPassQuery({ token })
   return (
     <header className="bg-emerald-400 mb-5">
-      <div className={paddingX + ' flex gap-6 pb-4 justify-start items-center'}>
-        {/* <BurgerMenu /> */}
+      <div
+        className={cn(paddingX + ' flex gap-6 pb-4 items-center', {
+          'justify-start': !isScreenMobBig,
+          'justify-between': isScreenMobBig,
+        })}
+      >
+        {isScreenMobBig && <BurgerMenu pass={pass ?? false} />}
         <Link to="/">
           <img src={Logo} />
         </Link>
-        <div className="flex gap-6 items-center">
-          {/* <div> */}
-          <Link className="!text-white hover:!text-emerald-700" to="/post">
-            Статьи
-          </Link>
-          <Link className="!text-white hover:!text-emerald-700" to="/test">
-            Тесты
-          </Link>
-          {isShowAdminNav === 'true' && (
-            <>
-              <Link
-                className="!text-red-800 hover:!text-emerald-700"
-                to="/admin/post"
-              >
-                Статьи
-              </Link>
-              <Link
-                className="!text-red-800 hover:!text-emerald-700"
-                to="/admin/test"
-              >
-                Тесты
-              </Link>
-              <Link
-                className="!text-red-800 hover:!text-emerald-700"
-                to="/admin/categories"
-              >
-                Категории
-              </Link>
-            </>
-          )}
-        </div>
+        {isScreenMobBig && <div className="w-1 h-1"></div>}
+        {!isScreenMobBig && (
+          <div className="flex gap-6 items-center">
+            <Link className="!text-white hover:!text-emerald-700" to="/post">
+              Статьи
+            </Link>
+            <Link className="!text-white hover:!text-emerald-700" to="/test">
+              Тесты
+            </Link>
+            {pass && (
+              <>
+                <Link
+                  className="!text-red-800 hover:!text-emerald-700"
+                  to="/admin/post"
+                >
+                  Статьи
+                </Link>
+                <Link
+                  className="!text-red-800 hover:!text-emerald-700"
+                  to="/admin/test"
+                >
+                  Тесты
+                </Link>
+                <Link
+                  className="!text-red-800 hover:!text-emerald-700"
+                  to="/admin/categories"
+                >
+                  Категории
+                </Link>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </header>
   )

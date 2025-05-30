@@ -26,27 +26,24 @@ declare module '@tanstack/react-router' {
   }
 }
 
-export const App = () => {
-  sessionStorage.setItem('isShowAdminNav', 'false')
-  return (
-    <Antd.ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: '#37ad5f',
-        },
-      }}
-    >
-      <Antd.App>
-        <RouterProvider router={router} />
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          newestOnTop
-          closeOnClick={false}
-          pauseOnHover
-          className="mt-4"
-        />
-      </Antd.App>
-    </Antd.ConfigProvider>
-  )
-}
+export const App = () => (
+  <Antd.ConfigProvider
+    theme={{
+      token: {
+        colorPrimary: '#37ad5f',
+      },
+    }}
+  >
+    <Antd.App>
+      <RouterProvider router={router} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        newestOnTop
+        closeOnClick={false}
+        pauseOnHover
+        className="mt-4"
+      />
+    </Antd.App>
+  </Antd.ConfigProvider>
+)

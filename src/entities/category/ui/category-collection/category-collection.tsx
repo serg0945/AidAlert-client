@@ -6,11 +6,12 @@ import {
   useDeleteCategoryMutation,
   useGetCategoryImagesMutation,
 } from '@/entities/category'
-import { useIsAdmin, useIsCategory } from '@/shared/hooks'
+import { useIsAdmin, useIsCategory, useResize } from '@/shared/hooks'
 import { DeleteConfirmButton } from '@/shared/ui/delete-confirm-button'
 import { Button } from 'antd'
 import { FC, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import cn from 'classnames'
 
 export const CategoryCollection: FC = () => {
   const [isShowCreate, setIsShowCreate] = useState<boolean>(false)
@@ -23,6 +24,8 @@ export const CategoryCollection: FC = () => {
 
   const isAdmin = useIsAdmin()
   const isCategory = useIsCategory()
+  const { isScreenPc, isScreenMob, isScreenMobBig, isScreenPcSmall } =
+    useResize()
 
   const imageFileNames = categories
     ?.filter((item) => item.imageFileName)
@@ -36,7 +39,12 @@ export const CategoryCollection: FC = () => {
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-6 border rounded-xl p-4 border-gray-300">
+      <div
+        className={cn('grid gap-6 border rounded-xl p-4 border-gray-300', {
+          'grid-cols-4': isScreenPc || isScreenPcSmall,
+          'grid-cols-1': isScreenMobBig || isScreenMob,
+        })}
+      >
         {categories?.map((item, index) => (
           <CategoryItem
             {...item}

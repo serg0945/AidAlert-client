@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react'
-import {
-  SCREEN_PC_SMALL,
-  SCREEN_PC,
-  SCREEN_MOB,
-  SCREEN_MOB_BIG,
-  SCREEN_TABLET,
-} from '../config'
+import { SCREEN_MOB, SCREEN_MOB_BIG, SCREEN_PC_SMALL } from '../config'
 
 export const useResize = () => {
   const [width, setWidth] = useState(window.innerWidth)
@@ -23,10 +17,9 @@ export const useResize = () => {
 
   return {
     width,
-    isScreenMob: width >= SCREEN_MOB,
-    isScreenMobBig: width >= SCREEN_MOB_BIG,
-    isScreenTab: width >= SCREEN_TABLET,
-    isScreenPcSmall: width >= SCREEN_PC_SMALL,
-    isScreenPc: width >= SCREEN_PC,
+    isScreenMob: width < SCREEN_MOB,
+    isScreenMobBig: width < SCREEN_MOB_BIG && width >= SCREEN_MOB,
+    isScreenPc: width >= SCREEN_PC_SMALL,
+    isScreenPcSmall: width <= SCREEN_PC_SMALL && width >= SCREEN_MOB_BIG,
   }
 }

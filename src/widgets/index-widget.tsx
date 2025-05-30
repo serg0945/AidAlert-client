@@ -6,12 +6,12 @@ import {
   HomePageTests,
   HomePageFirst,
 } from '@/shared/assets/images'
-import { useGetPassQuery } from '@/features/auth'
+import { useResize } from '@/shared/hooks'
+import cn from 'classnames'
 
 export const IndexWidget: FC = () => {
-  const { data: pass } = useGetPassQuery()
-  pass && sessionStorage.setItem('isShowAdminNav', 'true')
-
+  const { isScreenPc, isScreenMob, isScreenMobBig, isScreenPcSmall } =
+    useResize()
   return (
     <>
       <div className="mt-10 flex gap-8 items-center justify-between">
@@ -30,7 +30,10 @@ export const IndexWidget: FC = () => {
           </p>
         </div>
         <img
-          className="max-w-[550px] object-contain rounded-2xl"
+          className={cn('object-contain rounded-2xl', {
+            'max-w-[550px]': isScreenPc,
+            'max-w-[100px]': isScreenMobBig,
+          })}
           src={HomePageFirst}
         />
       </div>

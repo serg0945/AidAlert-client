@@ -3,7 +3,14 @@ import { FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const customFetchBaseQuery = (basePath: string) => {
   const baseUrl = `${SERVER_BASE_URL}/${basePath}`
-  const baseQuery = fetchBaseQuery({ baseUrl })
+  const baseQuery = fetchBaseQuery({
+    baseUrl,
+    prepareHeaders(headers) {
+      const token = localStorage.getItem('token') ?? ''
+      headers.set('Authorization', `Bearer ${token}`)
+      return headers
+    },
+  })
 
   return async (args: string | FetchArgs, api: any, extraOptions: any) => {
     const result = await baseQuery(args, api, extraOptions)

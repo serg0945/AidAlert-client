@@ -6,16 +6,12 @@ export const Redirect = ({ children }: { children: ReactNode }) => {
   const isAdmin = /admin/.test(url)
   const isAuth = /auth/.test(url)
   const shouldFetchPass = isAdmin || isAuth
+  const token = localStorage.getItem('token') ?? ''
 
-  const { data: pass } = useGetPassQuery(undefined, {
-    skip: !shouldFetchPass,
-  })
+  const { data: pass } = useGetPassQuery({ token })
 
   if (shouldFetchPass && pass !== undefined && !pass)
     window.history.pushState(null, '', '/auth')
-  else if (shouldFetchPass && pass) {
-    sessionStorage.setItem('isShowAdminNav', 'true')
-  }
 
   return <>{pass && children}</>
 }
