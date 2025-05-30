@@ -12,7 +12,7 @@ export const Layout: FC<{ children: ReactElement }> = ({ children }) => {
     'px-[300px]': isScreenPc,
     'px-[100px]': isScreenPcSmall,
     'px-[70px]': isScreenMobBig,
-    'px-[20px]': isScreenMob,
+    'px-[10px]': isScreenMob,
   })
 
   return (

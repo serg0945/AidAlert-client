@@ -3,6 +3,7 @@ import {
   SelectedAnswerValue,
 } from '@/entities/test/lib'
 import { useGetTestOneQuery } from '@/entities/test/model'
+import { H1Custom } from '@/shared/ui'
 import { useParams } from '@tanstack/react-router'
 import { Button, Radio } from 'antd'
 import { FC, useState } from 'react'
@@ -29,7 +30,7 @@ export const TestItem: FC = () => {
   return (
     <>
       <div className="flex flex-col">
-        <h1 className="!mb-0">{test?.title}</h1>
+        <H1Custom className="!mb-0" value={test?.title ?? ''} />
         <h3 className="mt-6 text-gray-500">{test?.owner}</h3>
         {test?.data.map((item, index) => (
           <div

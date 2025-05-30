@@ -1,4 +1,5 @@
 import { useGetPostImagesMutation, useGetPostOneQuery } from '@/entities/post'
+import { H1Custom } from '@/shared/ui'
 import { useParams } from '@tanstack/react-router'
 import TextArea from 'antd/es/input/TextArea'
 import { FC, useEffect, useState } from 'react'
@@ -40,7 +41,7 @@ export const PostItem: FC = () => {
 
   return (
     <div className="flex flex-col gap-6 px-60">
-      <h1 className="!mb-0">{post?.title}</h1>
+      <H1Custom className="!mb-0" value={post?.title ?? ''} />
       <h3 className="text-gray-500">{post?.owner}</h3>
       {data.map((block, blockIndex) => (
         <div className="flex flex-col gap-6" key={blockIndex}>

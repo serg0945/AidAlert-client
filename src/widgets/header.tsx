@@ -7,23 +7,25 @@ import { FC } from 'react'
 import cn from 'classnames'
 
 export const Header: FC<{ paddingX: string }> = ({ paddingX }) => {
-  const { isScreenMobBig } = useResize()
+  const { isScreenMobBig, isScreenMob } = useResize()
   const token = localStorage.getItem('token') ?? ''
   const { data: pass } = useGetPassQuery({ token })
   return (
     <header className="bg-emerald-400 mb-5">
       <div
         className={cn(paddingX + ' flex gap-6 pb-4 items-center', {
-          'justify-start': !isScreenMobBig,
-          'justify-between': isScreenMobBig,
+          'justify-start': !isScreenMobBig && !isScreenMob,
+          'justify-between': isScreenMobBig || isScreenMob,
         })}
       >
-        {isScreenMobBig && <BurgerMenu pass={pass ?? false} />}
+        {(isScreenMobBig || isScreenMob) && <BurgerMenu pass={pass ?? false} />}
         <Link to="/">
           <img src={Logo} />
         </Link>
-        {isScreenMobBig && <div className="w-1 h-1"></div>}
-        {!isScreenMobBig && (
+        {(isScreenMobBig || isScreenMob) && (
+          <div className="w-[30px] h-[30px]"></div>
+        )}
+        {!isScreenMobBig && !isScreenMob && (
           <div className="flex gap-6 items-center">
             <Link className="!text-white hover:!text-emerald-700" to="/post">
               Статьи

@@ -17,7 +17,7 @@ export const useResize = () => {
 
   return {
     width,
-    isScreenMob: width < SCREEN_MOB,
+    isScreenMob: width <= SCREEN_MOB,
     isScreenMobBig: width < SCREEN_MOB_BIG && width >= SCREEN_MOB,
     isScreenPc: width >= SCREEN_PC_SMALL,
     isScreenPcSmall: width <= SCREEN_PC_SMALL && width >= SCREEN_MOB_BIG,

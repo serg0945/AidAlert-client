@@ -8,20 +8,34 @@ import {
 } from '@/shared/assets/images'
 import { useResize } from '@/shared/hooks'
 import cn from 'classnames'
+import { H1Custom } from '@/shared/ui'
 
 export const IndexWidget: FC = () => {
   const { isScreenPc, isScreenMob, isScreenMobBig, isScreenPcSmall } =
     useResize()
+  console.log(isScreenMob)
   return (
     <>
-      <div className="mt-10 flex gap-8 items-center justify-between">
+      <div
+        className={cn('gap-8', {
+          'flex items-center justify-between mt-10':
+            isScreenPcSmall || isScreenPc,
+          'flex flex-col': isScreenMobBig || isScreenMob,
+        })}
+      >
         <div>
-          <h1 className="mt-10 !text-4xl">Сайт по оказанию первой помощи</h1>
+          <H1Custom
+            className="mt-10 !text-4xl"
+            value="Сайт по оказанию первой помощи"
+          />
           <p className="max-w-[600px] pb-8">
             Мы поможем вам с легкостью и удобством подобрать материал в
             соответствии с вашими требованиями и интересами
           </p>
-          <h2>Что такое AidAlert?</h2>
+          {isScreenMob && <h3>Что такое AidAlert?</h3>}
+          {(isScreenPc || isScreenMobBig || isScreenPcSmall) && (
+            <h3>Что такое AidAlert?</h3>
+          )}
           <p className="max-w-[600px]">
             AidAlert - это удобный сайт для поиска необходимой информации о том
             как правильно оказывать первую помощь, расскажем о различных
@@ -30,39 +44,69 @@ export const IndexWidget: FC = () => {
           </p>
         </div>
         <img
-          className={cn('object-contain rounded-2xl', {
+          className={cn('object-contain rounded-2xl m-auto', {
             'max-w-[550px]': isScreenPc,
-            'max-w-[100px]': isScreenMobBig,
+            'max-w-[400px]': isScreenPcSmall,
+            'max-w-[300px]': isScreenMobBig || isScreenMob,
           })}
           src={HomePageFirst}
         />
       </div>
-      <h2 className="mt-14">Возможности</h2>
+      <h2
+        className={cn('', {
+          'mt-14': isScreenPcSmall || isScreenPc,
+          'mt-10': isScreenMobBig || isScreenMob,
+        })}
+      >
+        Возможности
+      </h2>
       <h3>Статьи</h3>
       <p>
         Тесты помогают обновить знания и подходят как для людей без медицинского
         образования, так и для специалистов в области медицины.
       </p>
-      <div className="mt-6 gap-12 flex items-center">
+      <div
+        className={cn('mt-6 flex', {
+          'items-center gap-12': isScreenPc || isScreenPcSmall,
+          'flex-col gap-4': isScreenMobBig || isScreenMob,
+        })}
+      >
         <img
-          className="max-w-[400px] object-contain rounded-2xl"
+          className={cn('object-contain rounded-2xl m-auto')}
           src={HomePagePosts}
         />
         <div className="flex-grow">
           <PostTitleCollection />
         </div>
       </div>
-      <h3 className="mt-10">Тесты</h3>
+      <h3
+        className={cn('', {
+          'mt-14': isScreenPcSmall || isScreenPc,
+          'mt-2': isScreenMobBig || isScreenMob,
+        })}
+      >
+        Тесты
+      </h3>
       <p>
         Тесты помогают обновить знания и подходят как для людей без медицинского
         образования, так и для специалистов в области медицины.
       </p>
-      <div className="mt-10 flex gap-12 items-center">
+      <div
+        className={cn('flex', {
+          'items-center gap-12 mt-10': isScreenPc || isScreenPcSmall,
+          'flex-col gap-2 mt-0': isScreenMobBig || isScreenMob,
+        })}
+      >
         <div className="flex-grow">
           <TestCollection />
         </div>
         <img
-          className="max-w-[400px] object-contain rounded-2xl"
+          className={cn('object-contain rounded-2xl m-auto', {
+            'max-w-[550px]': isScreenPc,
+            'max-w-[400px]': isScreenPcSmall,
+            'max-w-[350px]': isScreenMobBig,
+            'max-w-[250px]': isScreenMob,
+          })}
           src={HomePageTests}
         />
       </div>
