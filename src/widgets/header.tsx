@@ -27,28 +27,34 @@ export const Header: FC<{ paddingX: string }> = ({ paddingX }) => {
         )}
         {!isScreenMobBig && !isScreenMob && (
           <div className="flex gap-6 items-center">
-            <Link className="!text-white hover:!text-emerald-700" to="/post">
+            <Link
+              className="!text-white hover:!text-emerald-700 !text-[20px]"
+              to="/post"
+            >
               Статьи
             </Link>
-            <Link className="!text-white hover:!text-emerald-700" to="/test">
+            <Link
+              className="!text-white hover:!text-emerald-700 !text-[20px]"
+              to="/test"
+            >
               Тесты
             </Link>
             {pass && (
               <>
                 <Link
-                  className="!text-red-800 hover:!text-emerald-700"
+                  className="!text-red-800 hover:!text-emerald-700 !text-[20px]"
                   to="/admin/post"
                 >
                   Статьи
                 </Link>
                 <Link
-                  className="!text-red-800 hover:!text-emerald-700"
+                  className="!text-red-800 hover:!text-emerald-700 !text-[20px]"
                   to="/admin/test"
                 >
                   Тесты
                 </Link>
                 <Link
-                  className="!text-red-800 hover:!text-emerald-700"
+                  className="!text-red-800 hover:!text-emerald-700 !text-[20px]"
                   to="/admin/categories"
                 >
                   Категории

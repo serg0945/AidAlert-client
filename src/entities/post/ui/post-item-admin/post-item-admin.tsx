@@ -5,11 +5,13 @@ import {
   useGetPostOneQuery,
   useEditPostMutation,
 } from '@/entities/post'
+import { ALLOWED_TYPES_IMAGE } from '@/shared/config'
+import { notify } from '@/shared/lib'
 import { DeleteConfirmButton } from '@/shared/ui/delete-confirm-button'
 import { useParams } from '@tanstack/react-router'
 import { Button, Input } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
-import { FC, useEffect, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export const PostItemAdmin: FC = () => {
@@ -100,6 +102,23 @@ export const PostItemAdmin: FC = () => {
     isCreate ? save(formData) : edit(formData)
   }
 
+  const handleChangeImage = (
+    e: ChangeEvent<HTMLInputElement>,
+    blockIndex: number,
+  ) => {
+    const files = e.target.files
+    if (files) {
+      const file = files[0]
+      if (Math.floor(file.size / 1024) > 2000) {
+        notify('Картинка должна быть до 2 мб!')
+        return
+      } else if (!ALLOWED_TYPES_IMAGE.includes(file.type)) {
+        notify('Поддерживаются форматы: JPEG, SVG, JPG, PNG')
+        return
+      } else if (files.length > 0) handleBlockChange(blockIndex, 'image', file)
+    }
+  }
+
   return (
     <>
       <div className="flex-col flex gap-6 mt-8">
@@ -131,13 +150,7 @@ export const PostItemAdmin: FC = () => {
               type="file"
               addonBefore="Картинка"
               disabled={!isCreate && isShowPreviewImages}
-              onChange={(e) => {
-                const files = e.target.files
-                if (files && files[0]) {
-                  const file = files[0]
-                  handleBlockChange(blockIndex, 'image', file)
-                }
-              }}
+              onChange={(e) => handleChangeImage(e, blockIndex)}
             />
             {isShowPreviewImages && images && (
               <img className="max-w-full" src={images[blockIndex]} />

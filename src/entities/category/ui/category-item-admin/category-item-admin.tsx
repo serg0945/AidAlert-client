@@ -13,11 +13,13 @@ import { useSelector } from 'react-redux'
 interface CategoryItemAdminProps {
   title: string
   method: 'PATCH' | 'POST'
+  type: 'create' | 'update'
 }
 
 export const CategoryItemAdmin: FC<CategoryItemAdminProps> = ({
   title,
   method,
+  type,
 }) => {
   const [name, setName] = useState<string>('')
   const [image, setImage] = useState<any>()
@@ -32,7 +34,7 @@ export const CategoryItemAdmin: FC<CategoryItemAdminProps> = ({
   )
 
   useEffect(() => {
-    category && setName(category.name)
+    type !== 'create' && category && setName(category.name)
   }, [category])
 
   const handleSubmit = () => {
@@ -50,8 +52,8 @@ export const CategoryItemAdmin: FC<CategoryItemAdminProps> = ({
     const files = e.target.files
     if (files) {
       const file = files[0]
-      if (Math.floor(file.size / 1024) > 1000) {
-        notify('Картинка должна быть до 1 мб!')
+      if (Math.floor(file.size / 1024) > 700) {
+        notify('Картинка должна быть до 700 кб!')
         return
       } else if (!ALLOWED_TYPES_IMAGE.includes(file.type)) {
         notify('Поддерживаются форматы: JPEG, SVG, JPG, PNG')

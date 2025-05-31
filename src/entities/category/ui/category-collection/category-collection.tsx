@@ -66,10 +66,18 @@ export const CategoryCollection: FC = () => {
         </>
       )}
       {isShowCreate && (
-        <CategoryItemAdmin title="Создать категорию" method="POST" />
+        <CategoryItemAdmin
+          title="Создать категорию"
+          method="POST"
+          type="create"
+        />
       )}
       {isCategory && selectedCategoryId !== '' && (
-        <CategoryItemAdmin title="Изменить категорию" method="PATCH" />
+        <CategoryItemAdmin
+          title="Изменить категорию"
+          method="PATCH"
+          type="update"
+        />
       )}
     </>
   )
