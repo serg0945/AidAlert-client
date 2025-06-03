@@ -1,14 +1,19 @@
 import { useGetPostImagesMutation, useGetPostOneQuery } from '@/entities/post'
+import { useResize } from '@/shared/hooks'
 import { H1Custom } from '@/shared/ui'
 import { useParams } from '@tanstack/react-router'
 import TextArea from 'antd/es/input/TextArea'
 import { FC, useEffect, useState } from 'react'
+import cn from 'classnames'
 
 export const PostItem: FC = () => {
   const { _id } = useParams({ strict: false })
   const { data: post } = useGetPostOneQuery({ _id })
   const [getImages, { data: images }] = useGetPostImagesMutation()
   const [data, setData] = useState<{ content: string; image: any }[]>([])
+
+  const { isScreenPc, isScreenMob, isScreenPcSmall, isScreenTabletBig } =
+    useResize()
 
   useEffect(() => {
     if (post && post.imageFileNames.length !== 0) {
@@ -40,7 +45,13 @@ export const PostItem: FC = () => {
   }, [images])
 
   return (
-    <div className="flex flex-col gap-6 px-60">
+    <div
+      className={cn('flex flex-col gap-6', {
+        'px-60': isScreenPc || (isScreenPcSmall && !isScreenTabletBig),
+        'px-26': isScreenTabletBig && isScreenPcSmall,
+        'px-6': isScreenMob,
+      })}
+    >
       <H1Custom className="!mb-0" value={post?.title ?? ''} />
       <h3 className="text-gray-500">{post?.owner}</h3>
       {data.map((block, blockIndex) => (

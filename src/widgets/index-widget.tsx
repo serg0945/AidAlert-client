@@ -62,8 +62,10 @@ export const IndexWidget: FC = () => {
       </h2>
       <h3>Статьи</h3>
       <p>
-        Тесты помогают обновить знания и подходят как для людей без медицинского
-        образования, так и для специалистов в области медицины.
+        Статьи на нашем сайте важны для образования и повышения осведомленности
+        людей о принципах первой помощи. Они обеспечивают доступ к актуальной
+        информации, содержат практические советы и пошаговые инструкции по
+        действиям в экстренных ситуациях.
       </p>
       <div
         className={cn('mt-6 flex', {
@@ -72,7 +74,12 @@ export const IndexWidget: FC = () => {
         })}
       >
         <img
-          className={cn('object-contain rounded-2xl m-auto')}
+          className={cn('object-contain rounded-2xl m-auto', {
+            'max-w-[550px]': isScreenPc,
+            'max-w-[400px]': isScreenPcSmall,
+            'max-w-[350px]': isScreenMobBig,
+            'max-w-[250px]': isScreenMob,
+          })}
           src={HomePagePosts}
         />
         <div className="flex-grow">

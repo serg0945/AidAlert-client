@@ -11,14 +11,14 @@ export const BurgerMenu: FC<{ pass: boolean }> = ({ pass }) => {
         <img
           src={BurgerMenuIcon}
           onClick={() => setIsShowMenu(true)}
-          className="p-2 border rounded-[10px] cursor-pointer"
+          className="cursor-pointer"
         />
       ) : (
         <div className="flex flex-col gap-4">
           <img
             src={CancelIcon}
             onClick={() => setIsShowMenu(false)}
-            className="p-2 border rounded-[10px] max-w-[31px] cursor-pointer"
+            className="mt-2 border rounded-[10px] max-w-[16px] cursor-pointer"
           />
           <div className="flex items-center gap-8">
             <div className="flex flex-col gap-4">

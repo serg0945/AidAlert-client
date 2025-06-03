@@ -1,6 +1,7 @@
 export const SCREEN_MOB = 450
 export const SCREEN_MOB_BIG = 850
-export const SCREEN_PC_SMALL = 1580
+export const SCREEN_PC_SMALL = 1680
+export const SCREEN_TABLET_BIG = 1200
 
 export const FORM_RULES = [
   {
