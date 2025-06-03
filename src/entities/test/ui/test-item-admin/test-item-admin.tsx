@@ -90,7 +90,7 @@ export const TestItemAdmin: FC = () => {
     const newData = data.map((block, bIndex) => {
       if (bIndex === blockIndex) {
         const newAnswers = block.answers.map((answer, aIndex) => {
-          let updatedAnswer = { ...answer }
+          const updatedAnswer = { ...answer }
 
           if (aIndex === answerIndex) {
             if (field === 'isTrue') {

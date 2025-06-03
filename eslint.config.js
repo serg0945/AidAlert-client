@@ -21,8 +21,7 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
-      // 'prefer-const': 'off',
-      // '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

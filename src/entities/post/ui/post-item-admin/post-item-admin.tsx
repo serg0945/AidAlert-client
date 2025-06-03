@@ -153,7 +153,7 @@ export const PostItemAdmin: FC = () => {
               onChange={(e) => handleChangeImage(e, blockIndex)}
             />
             {isShowPreviewImages && images && (
-              <img className="max-w-full" src={images[blockIndex]} />
+              <img className="max-w-[800px] m-auto" src={images[blockIndex]} />
             )}
             <DeleteConfirmButton
               title="блок"
@@ -164,7 +164,7 @@ export const PostItemAdmin: FC = () => {
             {!isShowPreviewImages ||
               (isCreate && block.image && (
                 <img
-                  className="max-w-full"
+                  className="max-w-[800px] m-auto"
                   src={URL.createObjectURL(block.image)}
                   alt="Картинка"
                 />
