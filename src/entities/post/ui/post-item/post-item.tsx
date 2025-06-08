@@ -69,7 +69,6 @@ export const PostItem: FC = () => {
           {block.image && (
             <img className="max-w-full" src={block.image} alt="Картинка" />
           )}
-          <p>123123</p>
         </div>
       ))}
     </div>
