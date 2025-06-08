@@ -49,7 +49,7 @@ export const TestCollection: FC = () => {
             disabled={isAdmin}
             params={{ _id: item._id }}
             className={cn(
-              'border cursor-pointer rounded-[4px] py-2 px-4 border-gray-400 hover:border-emerald-500',
+              'border cursor-pointer rounded-[4px] p-2 border-gray-400 hover:border-emerald-500',
               {
                 '!border-emerald-500': selectedTestId === item._id,
               },

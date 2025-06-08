@@ -8,7 +8,12 @@ import cn from 'classnames'
 
 export const PostItem: FC = () => {
   const { _id } = useParams({ strict: false })
-  const { data: post } = useGetPostOneQuery({ _id })
+  const { data: post } = useGetPostOneQuery(
+    { _id },
+    {
+      refetchOnMountOrArgChange: true,
+    },
+  )
   const [getImages, { data: images }] = useGetPostImagesMutation()
   const [data, setData] = useState<{ content: string; image: any }[]>([])
 
