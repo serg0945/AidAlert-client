@@ -71,7 +71,6 @@ export const PostItem: FC = () => {
           )}
         </div>
       ))}
-      <h3 className="text-gray-500">123</h3>
     </div>
   )
 }
