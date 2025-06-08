@@ -10,7 +10,7 @@ export const Redirect = ({ children }: { children: ReactNode }) => {
 
   const { data: pass } = useGetPassQuery({ token })
 
-  if (shouldFetchPass && pass !== undefined && !pass)
+  if ((shouldFetchPass && pass !== undefined && !pass) || token === '')
     window.history.pushState(null, '', '/auth')
 
   return <>{pass && children}</>

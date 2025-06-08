@@ -12,6 +12,7 @@ import { Button } from 'antd'
 import { FC, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import cn from 'classnames'
+import { EmptyCollection } from '@/shared/ui'
 
 export const CategoryCollection: FC = () => {
   const [isShowCreate, setIsShowCreate] = useState<boolean>(false)
@@ -45,6 +46,7 @@ export const CategoryCollection: FC = () => {
           'grid-cols-1': isScreenMobBig || isScreenMob,
         })}
       >
+        {categories?.length === 0 && <EmptyCollection title="Нет категорий" />}
         {categories?.map((item, index) => (
           <CategoryItem
             {...item}

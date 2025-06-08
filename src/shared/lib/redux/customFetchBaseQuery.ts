@@ -8,6 +8,8 @@ export const customFetchBaseQuery = (basePath: string) => {
     prepareHeaders(headers) {
       const token = localStorage.getItem('token') ?? ''
       headers.set('Authorization', `Bearer ${token}`)
+      headers.set('Cache-Control', 'no-cache')
+      headers.set('Accept', 'application/json')
       return headers
     },
   })
